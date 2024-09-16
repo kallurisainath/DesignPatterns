@@ -1,0 +1,55 @@
+Singleton Design Pattern:
+  This design pattern ensures that a class should contains only one instance.
+  USES:
+    1. Database Connection: Instead of creating instance for each and every object to the database, create an instance and share it to the entire application
+        such that other programs can also create instances and can reduce overhead.
+    2. Global configuration or settings: When we want to use a single instance throughout entire application.
+
+Example:
+    
+class Singleton {
+
+    // Step 1: Create a private static instance of the class
+    private static Singleton instance;
+
+    // Step 2: Make the constructor private so that it can't be instantiated outside the class
+    private Singleton() {
+        System.out.println("Singleton instance created.");
+    }
+
+    // Step 3: Provide a public static method to get the instance of the class
+    public static Singleton getInstance() {
+        if (instance == null) {
+            instance = new Singleton();  // create instance if it doesn't exist
+        }
+        return instance;
+    }
+
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Both references point to the same instance
+        Singleton obj1 = Singleton.getInstance();
+        Singleton obj2 = Singleton.getInstance();
+
+        // Checking if obj1 and obj2 are the same
+        if (obj1 == obj2) {
+            System.out.println("Both references point to the same instance.");
+        }
+    }
+}
+
+FAQ:
+1.Why we have to use private to the constructor?
+A.Private constructors restricts other classes to create instances i.e. creating instance can be done by singleton class in above example.
+
+2.Why we have to use private static to the Singleton instance?
+A.If we don't use private to the singleton instancce other classes can change it's value.
+  For example: class main can change it like Singleton.instance = null 
+  so inorder to prevent other classes not to change the state of object we will make it as private
+
+3.Early and lazy initialization:
+  Early initialization example: private static Singleton instance = new Singleton() 
+  Before first call of getInstance() method, object will be created.
+  Lazy initialization: Above code is example for this i.e. object will be created at first call to getInstance() method
